@@ -19,10 +19,12 @@ const Link = (p: { to: string; text: string; icon: string }) => {
       <TooltipTrigger
         as={Button}
         onClick={() => navigate(p.to)}
-        aria-selected={location.pathname === p.to}
-        style={location.pathname === p.to ? "selected" : undefined}
+        data-selected={location.pathname === p.to}
+        class={cn({
+          "text-brand": location.pathname === p.to,
+        })}
         size="icon"
-        variant={"ghost"}
+        variant="ghost"
       >
         <FaIcon name={p.icon} size="lg" />
       </TooltipTrigger>
@@ -33,7 +35,7 @@ const Link = (p: { to: string; text: string; icon: string }) => {
 
 export const DesktopMenu = (props: ComponentProps<"div">) => {
   return (
-    <div
+    <aside
       class={cn("flex overflow-hidden flex-col items-start px-2 pb-2 bg-background", props.class)}
     >
       <AshisoLogo class="w-10 h-10" />
@@ -45,8 +47,8 @@ export const DesktopMenu = (props: ComponentProps<"div">) => {
       <div class="flex flex-col gap-2 items-center mt-auto">
         <ToggleLang />
         <ToggleTheme />
-        <Skeleton />
+        <Skeleton class="size-9 rounded-full" />
       </div>
-    </div>
+    </aside>
   );
 };

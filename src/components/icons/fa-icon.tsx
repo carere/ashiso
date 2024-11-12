@@ -1,3 +1,4 @@
+import { cn } from "@/libs/cn";
 import { mergeProps } from "solid-js";
 import { match } from "ts-pattern";
 
@@ -83,7 +84,10 @@ export const FaIcon = (props: FaIconProps) => {
   return (
     <i
       onPointerDown={() => defaults.onClick?.()}
-      class={`${family()} ${style()} ${size()} ${rotate()} fa-${defaults.name} ${animation()} ${defaults.class}`}
+      class={cn(
+        `${family()} ${style()} ${size()} ${rotate()} fa-${defaults.name} ${animation()}`,
+        defaults.class,
+      )}
       classList={defaults.classList}
     />
   );
