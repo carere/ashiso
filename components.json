@@ -9,6 +9,7 @@
     "color": "slate"
   },
   "alias": {
+    "ui": "@/components/atoms",
     "component": "@/components",
     "cn": "@/libs/cn"
   }
