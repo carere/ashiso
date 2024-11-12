@@ -56,7 +56,7 @@
     "postcss-import": "latest",
     "sort-package-json": "latest",
     "tailwindcss": "latest",
-    "tailwindcss-animate": "latest",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "latest"
   },
   "engines": {

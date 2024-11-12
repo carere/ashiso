@@ -1,3 +1,5 @@
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "@solidjs/start/config";
 
 export default defineConfig({
@@ -10,6 +12,11 @@ export default defineConfig({
     optimizeDeps: { exclude: ["sqlocal"] },
     worker: { format: "es" },
     build: { target: "esnext" },
+    resolve: {
+      alias: {
+        "@": resolve(dirname(fileURLToPath(import.meta.url)), "./src"),
+      },
+    },
     plugins: [
       {
         name: "configure-response-headers",

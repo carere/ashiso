@@ -64,6 +64,7 @@
     "microfuzz",
     "nozbe",
     "radash",
+    "solidjs",
     "sqlite",
     "sqlocal",
     "tailwindcss",
