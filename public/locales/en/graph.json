@@ -1,0 +1,14 @@
+{
+  "trading_session": "Trading Session",
+  "trading_session_desc": "A trading session is a period during which trading activities occur in financial markets.",
+  "trading_pair": "Trading Pair",
+  "trading_pair_desc": "A pair is a financial instrument that consists of two components, typically referred to as the base and quote currencies. The base currency is the first currency in the pair, while the quote currency is the second currency.",
+  "trading_frequency": "Trading Frequency",
+  "trading_frequency_desc": "The frequency refers to the time frame in which traders execute trades. It is usually measured in minutes, hours, days, or weeks. It is also more difficult to trade in lower time frames due to increased market noise.",
+  "back_test_or_live": "Back-Test or Live",
+  "back_test_or_live_desc": "The trading session discussed can be for back-testing purposes, where traders test their strategies using historical data to assess performance. It can also be for live trading, where traders execute real-time trades in the market.",
+  "add_first_session": "Add your first session",
+  "scalping_trading": "Scalping is a short-term trading strategy aimed at profiting from small price changes in a security. Traders who employ this method, known as scalpers, often make multiple trades throughout a single day, holding positions for seconds to minutes. The primary objective is to accumulate small and frequent gains while minimizing losses, often leveraging high volumes and tight stop-loss limits to capitalize on very small price movements. Scalping requires quick decision-making, a lot of screen time, and typically uses technical analysis tools for timing entry and exit points.",
+  "intra_day_trading": "Intraday trading, also known as day trading, is a strategy where traders buy and sell financial instruments within the same trading day. This means all positions are closed before the market closes to avoid overnight risk. Intraday traders aim to capitalize on small price movements within the day, often making multiple trades based on intraday price patterns and momentum. They typically use technical analysis, chart patterns, and market indicators to determine entry and exit points. Intraday trading requires swift decision-making, continuous market monitoring, and a good understanding of market trends and volatility.",
+  "swing_trading": "Swing trading is a medium-term trading strategy where traders aim to capture gains from price swings or movements over several days to weeks. Unlike day trading, swing traders do not close all positions at the end of each trading day; instead, they hold positions for a longer period to take advantage of expected market shifts. Swing traders rely on technical analysis to identify patterns, trends, and potential reversal points, but they may also incorporate fundamental analysis to understand broader market opportunities."
+}

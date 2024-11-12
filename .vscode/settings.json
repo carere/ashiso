@@ -1,0 +1,65 @@
+{
+  "html.format.indentInnerHtml": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.indentSize": "tabSize",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[yaml,yml]": {
+    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  },
+  "files.associations": {
+    "*.css": "tailwindcss",
+    "*.prototools": "toml"
+  },
+  "tailwindCSS.files.exclude": ["**/.git/**", "**/node_modules/**", "**/.hg/**"],
+  "tailwindCSS.classAttributes": ["class"],
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["classList={{([^;]*)}}", "\\s*?[\"'`]([^\"'`]*).*?:"],
+    ["cn\\(([^]*)\\)", "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"]
+  ],
+  "todo-tree.general.tags": ["BONUS", "PERF", "TODO"],
+  "cSpell.language": "en,fr",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": [
+    "biomejs",
+    "commitzen",
+    "cssnano",
+    "kobalte",
+    "lefthook",
+    "luxon",
+    "sqlite",
+    "sqlocal",
+    "tailwindcss",
+    "vinxi"
+  ]
+}

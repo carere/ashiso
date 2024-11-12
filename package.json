@@ -1,0 +1,47 @@
+{
+  "name": "ashiso",
+  "description": "Trading Visualization Tool",
+  "bugs": "https://github.com/carere/ashiso/issues",
+  "repository": "github:carere/ashiso",
+  "license": "MIT",
+  "author": "Kevin Abatan <abatan.k@gmail.com> (https://github.com/carere)",
+  "type": "module",
+  "scripts": {
+    "build": "vinxi build",
+    "dev": "vinxi dev",
+    "start": "vinxi start"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@solidjs/start": "^1.0.10",
+    "solid-js": "^1.9.3",
+    "vinxi": "^0.4.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "@kobalte/tailwindcss": "latest",
+    "@total-typescript/ts-reset": "latest",
+    "@types/bun": "latest",
+    "@types/luxon": "latest",
+    "@types/node": "latest",
+    "autoprefixer": "latest",
+    "commitizen": "latest",
+    "cssnano": "latest",
+    "cz-conventional-changelog": "latest",
+    "drizzle-kit": "latest",
+    "lefthook": "latest",
+    "postcss": "latest",
+    "postcss-import": "latest",
+    "sort-package-json": "latest",
+    "tailwindcss": "latest",
+    "tailwindcss-animate": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
