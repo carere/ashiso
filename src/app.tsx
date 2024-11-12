@@ -1,22 +1,24 @@
-import { createSignal } from "solid-js";
+import { ColorModeProvider, ColorModeScript, cookieStorageManagerSSR } from "@kobalte/core";
+import { TransProvider } from "@mbarzda/solid-i18next";
+import { MetaProvider } from "@solidjs/meta";
+import { Router } from "@solidjs/router";
+import { FileRoutes } from "@solidjs/start/router";
+import { Suspense } from "solid-js";
 import "./app.css";
 
-export default function App() {
-  const [count, setCount] = createSignal(0);
+const storageManager = cookieStorageManagerSSR(document.cookie);
 
+export default function App() {
   return (
-    <main>
-      <h1>Hello world!</h1>
-      <button onClick={() => setCount(count() + 1)} type="button">
-        Clicks: {count()}
-      </button>
-      <p>
-        Visit{" "}
-        <a href="https://start.solidjs.com" rel="noreferrer" target="_blank">
-          start.solidjs.com
-        </a>{" "}
-        to learn how to build SolidStart apps.
-      </p>
-    </main>
+    <TransProvider>
+      <MetaProvider>
+        <ColorModeScript storageType={storageManager.type} />
+        <ColorModeProvider storageManager={storageManager}>
+          <Router root={(props) => <Suspense>{props.children}</Suspense>}>
+            <FileRoutes />
+          </Router>
+        </ColorModeProvider>
+      </MetaProvider>
+    </TransProvider>
   );
 }

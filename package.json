@@ -17,6 +17,10 @@
     }
   },
   "dependencies": {
+    "@kobalte/core": "^0.13.7",
+    "@mbarzda/solid-i18next": "^1.4.1",
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.15.1",
     "@solidjs/start": "^1.0.10",
     "solid-js": "^1.9.3",
     "vinxi": "^0.4.3"
