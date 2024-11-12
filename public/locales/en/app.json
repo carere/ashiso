@@ -6,7 +6,7 @@
   "error_message": "An error has occurred: {{error_message}}",
   "not_found": "Page not found",
   "oops": "Oops !",
-  "not_exist": "This page '{{page}}' does not exist.",
+  "not_exist": "The page '{{page}}' does not exist.",
   "lng_change": "Change language",
   "theme_change": "Change theme",
   "logout": "Logout",

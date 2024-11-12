@@ -15,13 +15,11 @@ const Link = (p: { to: string; text: string; icon: string }) => {
   return (
     <Button
       onClick={() => navigate(p.to)}
-      class={cn("flex-col gap-4 items-center hover:bg-transparent group", {
-        "text-brand": location.pathname === p.to,
-      })}
+      class="flex-col gap-4 items-center hover:bg-transparent"
       variant={"ghost"}
     >
-      <FaIcon name={p.icon} size="lg" />
-      <span>{p.text}</span>
+      <FaIcon name={p.icon} class={cn({ "text-brand": location.pathname === p.to })} size="lg" />
+      <span class={cn({ "text-brand": location.pathname === p.to })}>{p.text}</span>
     </Button>
   );
 };
