@@ -52,15 +52,22 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
     "biomejs",
+    "clsx",
     "commitzen",
+    "corvu",
     "cssnano",
     "kobalte",
+    "languagedetector",
     "lefthook",
     "luxon",
     "mbarzda",
+    "microfuzz",
+    "nozbe",
+    "radash",
     "sqlite",
     "sqlocal",
     "tailwindcss",
-    "vinxi"
+    "vinxi",
+    "xior"
   ]
 }

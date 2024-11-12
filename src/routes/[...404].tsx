@@ -1,10 +1,9 @@
-import { useTransContext } from "@mbarzda/solid-i18next";
 import { Title } from "@solidjs/meta";
 import { useLocation } from "@solidjs/router";
+import { t } from "i18next";
 
 export default function NotFound() {
   const location = useLocation();
-  const [t] = useTransContext();
 
   return (
     <>

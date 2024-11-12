@@ -9,6 +9,7 @@
   "scripts": {
     "build": "vinxi build",
     "dev": "vinxi dev",
+    "generate": "drizzle-kit generate",
     "start": "vinxi start"
   },
   "config": {
@@ -17,20 +18,33 @@
     }
   },
   "dependencies": {
+    "@date-fns/utc": "^2.1.0",
     "@kobalte/core": "^0.13.7",
-    "@mbarzda/solid-i18next": "^1.4.1",
+    "@modular-forms/solid": "^0.24.1",
+    "@nozbe/microfuzz": "^1.0.0",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.1",
     "@solidjs/start": "^1.0.10",
+    "@swan-io/boxed": "^3.1.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "corvu": "^0.7.1",
+    "date-fns": "^4.1.0",
+    "drizzle-orm": "^0.36.1",
+    "i18next": "^23.16.5",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-http-backend": "^2.6.2",
+    "radash": "^12.1.0",
     "solid-js": "^1.9.3",
-    "vinxi": "^0.4.3"
+    "tailwind-merge": "^2.5.4",
+    "vinxi": "^0.4.3",
+    "xior": "^0.6.1"
   },
   "devDependencies": {
     "@biomejs/biome": "latest",
     "@kobalte/tailwindcss": "latest",
     "@total-typescript/ts-reset": "latest",
     "@types/bun": "latest",
-    "@types/luxon": "latest",
     "@types/node": "latest",
     "autoprefixer": "latest",
     "commitizen": "latest",
