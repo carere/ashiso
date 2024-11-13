@@ -1,4 +1,4 @@
-import { cn } from "@/libs/cn";
+import { cn } from "@/libs/utils";
 import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import type { TooltipContentProps, TooltipRootProps } from "@kobalte/core/tooltip";
 import { Tooltip as TooltipPrimitive } from "@kobalte/core/tooltip";

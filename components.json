@@ -11,6 +11,6 @@
   "alias": {
     "ui": "@/components/atoms",
     "component": "@/components",
-    "cn": "@/libs/cn"
+    "cn": "@/libs/utils"
   }
 }

@@ -5,7 +5,7 @@ import { ToggleTheme } from "@/components/atoms/toggle-theme";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/atoms/tooltip";
 import { AshisoLogo } from "@/components/icons/ashiso-logo";
 import { FaIcon } from "@/components/icons/fa-icon";
-import { cn } from "@/libs/cn";
+import { cn } from "@/libs/utils";
 import { useLocation, useNavigate } from "@solidjs/router";
 import { t } from "i18next";
 import type { ComponentProps } from "solid-js";

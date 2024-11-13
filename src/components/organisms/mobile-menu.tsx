@@ -3,7 +3,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/atoms/sheet";
 import { ToggleLang } from "@/components/atoms/toggle-lang";
 import { ToggleTheme } from "@/components/atoms/toggle-theme";
 import { FaIcon } from "@/components/icons/fa-icon";
-import { cn } from "@/libs/cn";
+import { cn } from "@/libs/utils";
 import { useLocation, useNavigate } from "@solidjs/router";
 import { t } from "i18next";
 import { type ComponentProps, createSignal } from "solid-js";
@@ -52,7 +52,7 @@ export const MenuDrawer = () => {
   );
 };
 
-export default function MobileMenu(props: ComponentProps<"nav">) {
+export function MobileMenu(props: ComponentProps<"nav">) {
   return (
     <nav class={cn("flex h-24 items-center justify-evenly border-t border-border", props.class)}>
       <Link to="/" text={t("home", { ns: "app" })} icon="table-columns" />

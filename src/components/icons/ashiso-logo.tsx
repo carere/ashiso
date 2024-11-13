@@ -1,4 +1,4 @@
-import { cn } from "@/libs/cn";
+import { cn } from "@/libs/utils";
 import { type ComponentProps, splitProps } from "solid-js";
 
 export const AshisoLogo = (props: ComponentProps<"svg"> & { animate?: boolean }) => {

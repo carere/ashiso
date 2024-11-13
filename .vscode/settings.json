@@ -4,7 +4,9 @@
   "editor.insertSpaces": true,
   "editor.indentSize": "tabSize",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "always"
+    "source.fixAll.biome": "always",
+    "source.organizeImports.biome": "always",
+    "source.removeUnusedImports": "always"
   },
   "[toml]": {
     "editor.defaultFormatter": "tamasfe.even-better-toml"
@@ -56,6 +58,8 @@
     "commitzen",
     "corvu",
     "cssnano",
+    "fapi",
+    "klines",
     "kobalte",
     "languagedetector",
     "lefthook",

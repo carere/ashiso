@@ -1,4 +1,4 @@
-import { cn } from "@/libs/cn";
+import { cn } from "@/libs/utils";
 import { mergeProps } from "solid-js";
 import { match } from "ts-pattern";
 
