@@ -39,6 +39,7 @@
     "solid-js": "^1.9.3",
     "tailwind-merge": "^2.5.4",
     "ts-pattern": "^5.5.0",
+    "valibot": "^1.0.0-beta.3",
     "vinxi": "^0.4.3",
     "xior": "^0.6.1"
   },
