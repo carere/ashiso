@@ -18,7 +18,7 @@
     }
   },
   "dependencies": {
-    "@carere/solux": "^3.3.1",
+    "@carere/solux": "^3.3.2",
     "@date-fns/utc": "^2.1.0",
     "@kobalte/core": "^0.13.7",
     "@modular-forms/solid": "^0.24.1",
