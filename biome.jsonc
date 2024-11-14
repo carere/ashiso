@@ -13,6 +13,10 @@
     "enabled": true,
     "rules": {
       "recommended": true
+      // "style": {
+      //   "recommended": true,
+      //   "noDefaultExport": "error"
+      // }
     }
   },
   "formatter": {

@@ -10,6 +10,10 @@ import Backend from "i18next-http-backend";
 import { Suspense } from "solid-js";
 import "./app.css";
 import { Loading } from "@/components/templates/loading";
+import { binanceCryptoService } from "./libs/adapters/crypto.service";
+import { ashisoExchangeFacade } from "./libs/adapters/exchange.facade";
+import { binanceExchangeGateway } from "./libs/adapters/exchanges/binance";
+import type { Container, ExchangeSlug } from "./libs/types";
 
 const storageManager = cookieStorageManagerSSR(document.cookie);
 
@@ -29,8 +33,17 @@ await i18next
   });
 
 export default function App() {
+  const container: Container = {
+    cryptoService: binanceCryptoService(import.meta.env.VITE_BINANCE_API_URL),
+    exchangeFacade: ashisoExchangeFacade({
+      ["binance" as ExchangeSlug]: binanceExchangeGateway(
+        import.meta.env.VITE_BINANCE_REST_API_URL,
+      ),
+    }),
+  };
+
   return (
-    <SoluxProvider store={createStore()}>
+    <SoluxProvider store={createStore(container)}>
       <MetaProvider>
         <ColorModeScript storageType={storageManager.type} />
         <ColorModeProvider storageManager={storageManager}>
