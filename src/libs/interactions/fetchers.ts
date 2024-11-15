@@ -4,7 +4,7 @@ import { useStore } from "@/libs/utils";
 import { query } from "@solidjs/router";
 import { Dict, Future, Result } from "@swan-io/boxed";
 import { differenceInDays } from "date-fns";
-import { mapValues, objectify, unique } from "radash";
+import { assign, diff, mapValues, merge, objectify, select, unique } from "radash";
 import { parse } from "valibot";
 import type { CryptoService } from "../adapters/crypto.service";
 import type { ExchangeFacade } from "../adapters/exchange.facade";
@@ -56,8 +56,8 @@ export const getMarketMetadata = query(async () => {
         JSON.parse(localStorage.getItem("market-metadata") ?? "{}"),
       );
     }),
-  ).flatMap((result) => {
-    return result.match({
+  ).flatMap((result) =>
+    result.match({
       Error: () => {
         dispatch(loading("Fetching market metadata"));
         return fetchMetadata(cryptoService, exchangeFacade).mapOk((metadata) => {
@@ -72,11 +72,30 @@ export const getMarketMetadata = query(async () => {
         }
 
         return fetchMetadata(cryptoService, exchangeFacade).mapOk((newMetadata) => {
-          //TODO: Diff storedMetadata with new metadata and mark contracts as deprecated
-          localStorage.setItem("market-metadata", JSON.stringify(newMetadata));
-          dispatch(updateMarketMetadata(newMetadata));
+          const deprecatedTickers = diff(
+            Dict.keys(oldMetadata.contracts),
+            Dict.keys(newMetadata.contracts),
+          );
+
+          const deprecatedContracts = select(
+            Dict.values(oldMetadata.contracts),
+            (c) => ({ ...c, deprecated: true }),
+            (c) => deprecatedTickers.includes(c.ticker),
+          );
+
+          const finalMetadata: MarketMetadata = {
+            ...newMetadata,
+            cryptos: assign(newMetadata.cryptos, oldMetadata.cryptos),
+            contracts: objectify(
+              merge(Dict.values(newMetadata.contracts), deprecatedContracts, (c) => c.ticker),
+              (c) => c.ticker,
+            ),
+          };
+
+          localStorage.setItem("market-metadata", JSON.stringify(finalMetadata));
+          dispatch(updateMarketMetadata(finalMetadata));
         });
       },
-    });
-  });
+    }),
+  );
 }, "market-metadata");

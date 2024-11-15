@@ -116,6 +116,7 @@ export const binanceExchangeGateway = (restApiUrl: string): ExchangeGateway => {
                   pricePrecision: s.pricePrecision,
                   tickSize: getTickSize(s.filters),
                   volumePrecision: s.pricePrecision + s.quantityPrecision,
+                  deprecated: false,
                 })),
                 Fundamental: [],
                 Futures: [],

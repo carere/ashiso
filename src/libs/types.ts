@@ -1,6 +1,7 @@
 import type { Epic } from "@carere/solux";
 import {
   type InferOutput,
+  boolean,
   brand,
   isoTimestamp,
   literal,
@@ -70,6 +71,7 @@ export const ContractSchema = object({
   pricePrecision: number(),
   volumePrecision: number(),
   tickSize: number(),
+  deprecated: boolean(),
 });
 
 export type Contract = InferOutput<typeof ContractSchema>;
