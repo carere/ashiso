@@ -1,8 +1,14 @@
 import { createElementSize } from "@solid-primitives/resize-observer";
-import { type Transformer, useDragDropContext } from "@thisbeyond/solid-dnd";
-import { type Accessor, createEffect } from "solid-js";
+import {
+  DragDropProvider,
+  DragDropSensors,
+  type Transformer,
+  useDragDropContext,
+} from "@thisbeyond/solid-dnd";
+import { type Accessor, type ComponentProps, createEffect, createSignal } from "solid-js";
+import { Controls } from "./controls";
 
-export const ConstrainDragAxis = (props: {
+const ConstrainDragAxis = (props: {
   draggable: Accessor<HTMLDivElement | undefined>;
   droppable: Accessor<HTMLDivElement | undefined>;
 }) => {
@@ -73,4 +79,20 @@ export const ConstrainDragAxis = (props: {
   });
 
   return <></>;
+};
+
+export const SessionPanel = (props: ComponentProps<"div"> & { id: string }) => {
+  const [droppable, setDroppable] = createSignal<HTMLDivElement>();
+  const [draggable, setDraggable] = createSignal<HTMLDivElement>();
+
+  return (
+    <DragDropProvider>
+      <DragDropSensors />
+      <ConstrainDragAxis draggable={draggable} droppable={droppable} />
+      <div ref={setDroppable} class="relative flex items-end md:items-start gap-2 h-full w-full">
+        {/* <GraphLayout sessionId={props.id} /> */}
+        <Controls ref={setDraggable} sessionId={props.id} />
+      </div>
+    </DragDropProvider>
+  );
 };

@@ -100,4 +100,4 @@ export const getMarketMetadata = query(async () => {
       },
     }),
   );
-}, "market-metadata");
+}, MARKET_METADATA_KEY);

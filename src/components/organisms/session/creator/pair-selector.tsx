@@ -18,7 +18,16 @@ import { For, createMemo, createSignal } from "solid-js";
 const DesktopPairInfo = (props: Pick<Contract, "name" | "ticker" | "base"> & { logo?: string }) => (
   <div class="hidden flex-grow md:grid grid-cols-[1.3fr_1fr]">
     <div class="flex gap-2 items-center">
-      <img class="w-5 h-5" src={props.logo} crossOrigin="anonymous" alt={props.base} />
+      <img
+        class="w-5 h-5"
+        src={props.logo}
+        crossOrigin="anonymous"
+        alt={props.base}
+        onError={(event) => {
+          event.currentTarget.src = "/default-crypto-logo.svg";
+          event.currentTarget.onerror = null;
+        }}
+      />
       <span class="text-sm">{props.ticker.split(":")[1]}</span>
     </div>
     <span>{props.name}</span>
@@ -27,7 +36,16 @@ const DesktopPairInfo = (props: Pick<Contract, "name" | "ticker" | "base"> & { l
 
 const MobilePairInfo = (props: Pick<Contract, "name" | "ticker" | "base"> & { logo?: string }) => (
   <div class="flex flex-row flex-grow gap-3 items-center md:hidden">
-    <img class="w-5 h-5" src={props.logo} crossOrigin="anonymous" alt={props.base} />
+    <img
+      class="w-5 h-5"
+      src={props.logo}
+      crossOrigin="anonymous"
+      alt={props.base}
+      onError={(event) => {
+        event.currentTarget.src = "/default-crypto-logo.svg";
+        event.currentTarget.onerror = null;
+      }}
+    />
     <div class="flex flex-col">
       <span>{props.ticker}</span>
       <span class="text-sm text-neutral-500 dark:text-neutral-600">{props.name}</span>

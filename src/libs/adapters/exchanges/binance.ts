@@ -76,7 +76,10 @@ const getTickSize = (filters: FuturesSymbolFilter[]): number => {
 };
 
 export const binanceExchangeGateway = (restApiUrl: string): ExchangeGateway => {
-  const xiorInstance = xior.create({ baseURL: restApiUrl });
+  const xiorInstance = xior.create({
+    baseURL: restApiUrl,
+    headers: { "Access-Control-Allow-Origin": "*" },
+  });
 
   return {
     importPerpetualContracts: () =>

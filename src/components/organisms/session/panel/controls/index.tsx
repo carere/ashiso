@@ -119,7 +119,7 @@ const LayoutSelector = (props: ComponentProps<"div"> & { sessionId: string }) =>
   );
 };
 
-export default function Controls(props: ComponentProps<"div"> & { sessionId: string }) {
+export const Controls = (props: ComponentProps<"div"> & { sessionId: string }) => {
   const draggable = createDraggable(nanoid());
   const isSmall = createMediaQuery("(max-width: 768px)");
   const [open, setOpen] = createSignal(isSmall());
@@ -170,4 +170,4 @@ export default function Controls(props: ComponentProps<"div"> & { sessionId: str
       </Button>
     </div>
   );
-}
+};

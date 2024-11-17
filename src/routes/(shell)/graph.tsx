@@ -2,8 +2,8 @@ import { Button } from "@/components/atoms/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/atoms/tabs";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/atoms/tooltip";
 import { FaIcon } from "@/components/icons/fa-icon";
-import { SessionCreator } from "@/components/organisms/session/session-creator";
-import { SessionPanel } from "@/components/organisms/session/session-panel";
+import { SessionCreator } from "@/components/organisms/session/creator";
+import { SessionPanel } from "@/components/organisms/session/panel";
 import { SessionTab } from "@/components/organisms/session/session-tab";
 import { draftSession, switchSession } from "@/libs/store/events";
 import { isDraftSession } from "@/libs/store/selectors";
@@ -26,7 +26,7 @@ export default function Chart() {
         value={currentSession()}
         class="h-full flex gap-4 md:gap-0 flex-col-reverse md:flex-col p-4 md:p-0"
       >
-        <div class="flex flex-row items-center gap-4 justify-between">
+        <div class="flex flex-row items-center gap-4">
           <TabsList class="tab-list gap-1 overflow-x-scroll overflow-y-hidden justify-start">
             <For each={sessionIds()}>
               {(id) => (
