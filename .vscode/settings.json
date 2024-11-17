@@ -54,10 +54,15 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
     "biomejs",
+    "bollinger",
     "clsx",
+    "cmdk",
     "commitzen",
     "corvu",
     "cssnano",
+    "datepicker",
+    "Datepicker",
+    "draggables",
     "fapi",
     "klines",
     "kobalte",
@@ -73,8 +78,10 @@
     "sqlite",
     "sqlocal",
     "tailwindcss",
+    "thisbeyond",
     "valibot",
     "vinxi",
-    "xior"
+    "xior",
+    "xmark"
   ]
 }

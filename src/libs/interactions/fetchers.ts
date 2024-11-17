@@ -43,6 +43,8 @@ const fetchMetadata = (cryptoService: CryptoService, exchangeFacade: ExchangeFac
       };
     });
 
+const MARKET_METADATA_KEY = "market-metadata";
+
 export const getMarketMetadata = query(async () => {
   const {
     dispatch,
@@ -53,7 +55,7 @@ export const getMarketMetadata = query(async () => {
     Result.fromExecution(() => {
       return parse(
         MarketMetadataSchema,
-        JSON.parse(localStorage.getItem("market-metadata") ?? "{}"),
+        JSON.parse(localStorage.getItem(MARKET_METADATA_KEY) ?? "{}"),
       );
     }),
   ).flatMap((result) =>
@@ -61,7 +63,7 @@ export const getMarketMetadata = query(async () => {
       Error: () => {
         dispatch(loading("Fetching market metadata"));
         return fetchMetadata(cryptoService, exchangeFacade).mapOk((metadata) => {
-          localStorage.setItem("market-metadata", JSON.stringify(metadata));
+          localStorage.setItem(MARKET_METADATA_KEY, JSON.stringify(metadata));
           dispatch(updateMarketMetadata(metadata));
         });
       },
@@ -92,7 +94,7 @@ export const getMarketMetadata = query(async () => {
             ),
           };
 
-          localStorage.setItem("market-metadata", JSON.stringify(finalMetadata));
+          localStorage.setItem(MARKET_METADATA_KEY, JSON.stringify(finalMetadata));
           dispatch(updateMarketMetadata(finalMetadata));
         });
       },
