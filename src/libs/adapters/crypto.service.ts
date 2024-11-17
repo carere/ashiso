@@ -10,8 +10,6 @@ type BinanceCryptoServiceResponse = {
   data: {
     assetCode: string;
     assetName: string;
-    logoUrl: string;
-    fullLogoUrl: string;
   }[];
 };
 
@@ -33,9 +31,9 @@ export const binanceCryptoService = (baseUrl: string): CryptoService => {
           const cryptos: CryptoCurrency[] = [];
           for (const asset of assets) {
             cryptos.push({
-              ticker: asset.assetCode as CryptoTicker,
+              ticker: asset.assetCode.toUpperCase() as CryptoTicker,
               name: asset.assetName,
-              logo: asset.logoUrl,
+              logo: `${import.meta.env.VITE_CRYPTO_FONTS_CRYPTOS_URL}/${asset.assetCode.toLowerCase()}.svg`,
             });
           }
           return cryptos;

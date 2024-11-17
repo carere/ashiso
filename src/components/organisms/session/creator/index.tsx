@@ -3,9 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/car
 import { Label } from "@/components/atoms/label";
 import { FaIcon } from "@/components/icons/fa-icon";
 import { launchSession } from "@/libs/store/events";
-import type { CryptoCurrency, Exchange, Session } from "@/libs/types";
+import type { CryptoCurrency, Exchange, Session, TradingFrequency } from "@/libs/types";
 import { useStore } from "@/libs/utils";
 import { type ComponentProps, Show } from "solid-js";
+import { match } from "ts-pattern";
 import { PairSelector } from "./pair-selector";
 import { TimeFrameSelector } from "./time-frame-selector";
 
@@ -24,16 +25,34 @@ const CryptoSummary = (props: { crypto?: CryptoCurrency }) => (
   <Show when={props.crypto} fallback={<span>N/A</span>}>
     {(c) => (
       <div class="flex flex-row gap-2 items-center">
-        <img class="w-4 h-4" src={c().logo} crossOrigin="anonymous" alt={c().ticker} />
+        <img
+          class="w-4 h-4"
+          src={c().logo}
+          crossOrigin="anonymous"
+          alt={c().ticker}
+          onError={(event) => {
+            event.currentTarget.src = "/default-crypto-logo.svg";
+            event.currentTarget.onerror = null;
+          }}
+        />
         <span>{c().name}</span>
       </div>
     )}
   </Show>
 );
 
-const TimeFrameSummary = (props: { timeFrame?: string }) => (
+const TimeFrameSummary = (props: { timeFrame?: TradingFrequency }) => (
   <Show when={props.timeFrame} fallback={<span>N/A</span>}>
-    {(tf) => <span>{tf()}</span>}
+    {(tf) => (
+      <div class="flex flex-row gap-2 items-center">
+        {match(tf())
+          .with("scalping", () => <FaIcon name="gauge-min" />)
+          .with("intra-day", () => <FaIcon name="gauge" />)
+          .with("swing", () => <FaIcon name="gauge-max" />)
+          .exhaustive()}
+        <span>{tf()}</span>
+      </div>
+    )}
   </Show>
 );
 

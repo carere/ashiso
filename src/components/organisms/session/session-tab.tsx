@@ -7,6 +7,7 @@ import type { Session, TradingFrequency } from "@/libs/types";
 import { cn, useStore } from "@/libs/utils";
 import i18next from "i18next";
 import { type ComponentProps, Show } from "solid-js";
+import { match } from "ts-pattern";
 
 const NoContract = (props: { timeFrame?: TradingFrequency }) => (
   <span class="inline-flex items-center gap-2">
@@ -45,11 +46,21 @@ const SessionTabPreview = (props: { session: Session }) => {
               src={cryptoLogo()}
               crossOrigin="anonymous"
               alt={c().base.toLowerCase()}
+              onError={(event) => {
+                event.currentTarget.src = "/default-crypto-logo.svg";
+                event.currentTarget.onerror = null;
+              }}
             />
             <span class="text-sm">{props.session.ticker?.split(":")[1]}</span>
             <span>/</span>
             <Show when={props.session.frequency} fallback={<FaIcon name="clock" />}>
-              {props.session.frequency}
+              {(freq) =>
+                match(freq())
+                  .with("scalping", () => <FaIcon name="gauge-min" />)
+                  .with("intra-day", () => <FaIcon name="gauge" />)
+                  .with("swing", () => <FaIcon name="gauge-max" />)
+                  .exhaustive()
+              }
             </Show>
           </span>
         )}
