@@ -1,5 +1,5 @@
 import { sessionAdapter } from "@/libs/store/slices/session.slice";
-import type { RootState, TimeFrame, TradingFrequency } from "@/libs/types";
+import type { CandlesId, RootState, TimeFrame, TradingFrequency } from "@/libs/types";
 import { Dict } from "@swan-io/boxed";
 import { getTinyUnitOfTimeToTradeOn } from "../utils";
 
@@ -45,3 +45,41 @@ export const isBackTestSession = (state: RootState, id: string) =>
 export const isBackTestStartSelected = (state: RootState, id: string) =>
   Boolean(state.sessions.entities[id].selectedTime) ||
   Boolean(state.sessions.entities[id].backTest?.currentTime);
+
+export const isSelectionEnabled = (state: RootState, id: string) =>
+  Boolean(state.sessions.entities[id].backTest?.selecting);
+
+//
+// Candles
+//
+
+export const getCandles = (state: RootState, sessionId: string, candlesId: CandlesId) => () =>
+  !state.sessions.entities[sessionId].candles?.[candlesId]?.values
+    ? []
+    : state.sessions.entities[sessionId].candles[candlesId].values;
+
+//
+// Indicators Selectors
+//
+
+export const getBollingerBandsData =
+  (state: RootState, sessionId: string, timeFrame: TimeFrame) => () =>
+    !state.sessions.entities[sessionId].indicators?.[timeFrame]?.bollinger
+      ? []
+      : state.sessions.entities[sessionId].indicators[timeFrame].bollinger.values;
+
+export const getVolatilityData =
+  (state: RootState, sessionId: string, timeFrame: TimeFrame) => () =>
+    !state.sessions.entities[sessionId].indicators?.[timeFrame]?.volatility
+      ? []
+      : state.sessions.entities[sessionId].indicators[timeFrame].volatility.values;
+
+export const getVmaData = (state: RootState, sessionId: string, timeFrame: TimeFrame) => () =>
+  !state.sessions.entities[sessionId].indicators?.[timeFrame]?.volume
+    ? []
+    : state.sessions.entities[sessionId].indicators[timeFrame].volume.values;
+
+export const getBbPhaseData = (state: RootState, sessionId: string, timeFrame: TimeFrame) => () =>
+  !state.sessions.entities[sessionId].indicators?.[timeFrame]?.phases
+    ? []
+    : state.sessions.entities[sessionId].indicators[timeFrame].phases.values;

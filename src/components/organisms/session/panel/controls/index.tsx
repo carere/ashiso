@@ -148,7 +148,7 @@ export const Controls = (props: ComponentProps<"div"> & { sessionId: string }) =
       >
         <FaIcon name="grip-vertical" />
       </Button>
-      <Show when={isSmall()}>
+      <Show when={open()}>
         <DateSelector
           class="flex flex-col order-3 border-t md:border-t-0 md:order-none md:flex-row md:border-l shrink-0"
           sessionId={props.sessionId}

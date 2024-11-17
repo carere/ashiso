@@ -16,6 +16,7 @@ import {
 import type { CryptoService } from "./adapters/crypto.service";
 import type { ExchangeFacade } from "./adapters/exchange.facade";
 import type { rootSlice } from "./store/slices";
+import type { AnalyzerData } from "./utils/analyzer";
 
 //
 // Container
@@ -24,6 +25,8 @@ import type { rootSlice } from "./store/slices";
 export type Container = {
   exchangeFacade: ExchangeFacade;
   cryptoService: CryptoService;
+  candlesFetcher: Worker;
+  analyzers: Worker;
 };
 
 //
@@ -148,7 +151,17 @@ export type Candle = {
   ticker: ContractTicker;
 };
 
+export type SimpleCandle = Omit<Candle, "trades" | "volume" | "ticker">;
+
 export type CandlesId = `${ContractTicker}-${number}-${FetchResolution}`;
+
+export type StockPriceOption = {
+  ticker: ContractTicker;
+  multiplier: number;
+  resolution: FetchResolution;
+  from: UTCTimestamp;
+  to: UTCTimestamp;
+};
 
 //
 // Chart
@@ -173,7 +186,7 @@ export type GraphLayoutProps = {
   crossHair: Accessor<CrossHair | undefined>;
 };
 
-export type Range = { start: UTCTimestamp; end: UTCTimestamp };
+export type Range = Pick<StockPriceOption, "from" | "to">;
 
 //
 // Indicators
@@ -258,4 +271,49 @@ export type Session = {
       };
     }
   >;
+};
+
+//
+// Worker Events
+//
+
+export type CandleWorkerRequest =
+  | { type: "initialize" }
+  | {
+      type: "fetch-candles";
+      sender: string;
+      data: StockPriceOption;
+    };
+
+export type CandleWorkerResponse =
+  | { type: "initialized" }
+  | {
+      type: "candles-fetched";
+      sender: string;
+      data: Candle[];
+    };
+
+export type AnalyzerWorkerRequest = {
+  type: "analyze";
+  sender: string;
+  kind: "start" | "update";
+  data: {
+    candles: Candle[];
+    timeFrame: TimeFrame;
+    frequency: TradingFrequency;
+    previousAnalysis?: AnalyzerData;
+  };
+};
+
+export type AnalyzerWorkerResponse = {
+  type: "analyzed";
+  sender: string;
+  analysis: AnalyzerData;
+  kind: "start" | "update";
+  data: {
+    volume: VolumeMA[];
+    bollinger: BBands[];
+    volatility: Volatility[];
+    phases: BBPhase[];
+  };
 };

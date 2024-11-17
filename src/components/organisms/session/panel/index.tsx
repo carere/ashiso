@@ -6,6 +6,7 @@ import {
   useDragDropContext,
 } from "@thisbeyond/solid-dnd";
 import { type Accessor, type ComponentProps, createEffect, createSignal } from "solid-js";
+import { GraphLayout } from "./chart/layouts";
 import { Controls } from "./controls";
 
 const ConstrainDragAxis = (props: {
@@ -90,7 +91,7 @@ export const SessionPanel = (props: ComponentProps<"div"> & { id: string }) => {
       <DragDropSensors />
       <ConstrainDragAxis draggable={draggable} droppable={droppable} />
       <div ref={setDroppable} class="relative flex items-end md:items-start gap-2 h-full w-full">
-        {/* <GraphLayout sessionId={props.id} /> */}
+        <GraphLayout sessionId={props.id} />
         <Controls ref={setDraggable} sessionId={props.id} />
       </div>
     </DragDropProvider>

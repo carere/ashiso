@@ -22,7 +22,7 @@ import {
 } from "@/libs/store/selectors";
 import type { BackTestSpeed, FetchResolution } from "@/libs/types";
 import { cn, useStore } from "@/libs/utils";
-import { addResolution } from "@/libs/utils/time";
+import { addResolution } from "@/libs/utils";
 import { UTCDate } from "@date-fns/utc";
 import { createMediaQuery } from "@solid-primitives/media";
 import { t } from "i18next";

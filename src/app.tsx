@@ -12,7 +12,7 @@ import "./app.css";
 import { Loading } from "@/components/templates/loading";
 import { binanceCryptoService } from "./libs/adapters/crypto.service";
 import { ashisoExchangeFacade } from "./libs/adapters/exchange.facade";
-import { binanceExchangeGateway } from "./libs/adapters/exchanges/binance";
+import { binanceExchangeGateway } from "./libs/adapters/exchanges/binance/binance";
 import type { Container, ExchangeSlug } from "./libs/types";
 
 const storageManager = cookieStorageManagerSSR(document.cookie);
@@ -38,7 +38,14 @@ export default function App() {
     exchangeFacade: ashisoExchangeFacade({
       ["binance" as ExchangeSlug]: binanceExchangeGateway(
         import.meta.env.VITE_BINANCE_REST_API_URL,
+        import.meta.env.VITE_BINANCE_WS_API_URL,
       ),
+    }),
+    candlesFetcher: new Worker(new URL("./libs/workers/candles.worker.ts", import.meta.url), {
+      type: "module",
+    }),
+    analyzers: new Worker(new URL("./libs/workers/indicators.worker.ts", import.meta.url), {
+      type: "module",
     }),
   };
 

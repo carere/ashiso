@@ -9,6 +9,8 @@ import { parse } from "valibot";
 import type { CryptoService } from "../adapters/crypto.service";
 import type { ExchangeFacade } from "../adapters/exchange.facade";
 
+const MARKET_METADATA_KEY = "market-metadata";
+
 const fetchMetadata = (cryptoService: CryptoService, exchangeFacade: ExchangeFacade) =>
   Future.all([cryptoService.import(), exchangeFacade.importAllContracts()])
     .map(Result.all)
@@ -42,8 +44,6 @@ const fetchMetadata = (cryptoService: CryptoService, exchangeFacade: ExchangeFac
         },
       };
     });
-
-const MARKET_METADATA_KEY = "market-metadata";
 
 export const getMarketMetadata = query(async () => {
   const {

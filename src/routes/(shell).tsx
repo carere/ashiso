@@ -1,18 +1,37 @@
-import { DesktopMenu } from "@/components/organisms/desktop-menu";
-import { MobileMenu } from "@/components/organisms/mobile-menu";
+import { DesktopMenu } from "@/components/organisms/menu/desktop";
+import { MobileMenu } from "@/components/organisms/menu/mobile";
 import { Loading } from "@/components/templates/loading";
 import { getMarketMetadata } from "@/libs/interactions/fetchers";
-import { cn } from "@/libs/utils";
+import type { CandleWorkerResponse } from "@/libs/types";
+import { cn, useStore } from "@/libs/utils";
 import { type RouteDefinition, type RouteSectionProps, createAsync } from "@solidjs/router";
-import { Suspense, useTransition } from "solid-js";
+import { Suspense, onCleanup, onMount, useTransition } from "solid-js";
 
 export const route: RouteDefinition = {
   preload: () => getMarketMetadata(),
 };
 
 export default function Shell(props: RouteSectionProps) {
+  const {
+    container: { candlesFetcher },
+  } = useStore();
   const [pending] = useTransition();
   createAsync(() => getMarketMetadata());
+
+  const workerInitialized = (event: MessageEvent<CandleWorkerResponse>) => {
+    if (event.data.type === "initialized") {
+      console.log("[Main Thread] Worker initialized");
+    }
+  };
+
+  onMount(() => {
+    candlesFetcher.addEventListener("message", workerInitialized);
+    candlesFetcher.postMessage({ type: "initialize" });
+
+    onCleanup(() => {
+      candlesFetcher.removeEventListener("message", workerInitialized);
+    });
+  });
 
   return (
     <div class="flex flex-col h-full md:flex-row md:py-4 md:pr-4 bg-background">
