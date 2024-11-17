@@ -1,0 +1,42 @@
+@import "../node_modules/air-datepicker/air-datepicker.css";
+
+.air-datepicker {
+  --adp-background-color: theme(colors.background);
+  --adp-background-color-hover: theme(colors.accent.DEFAULT);
+  --adp-background-color-active: theme(colors.accent.DEFAULT / 0.6);
+
+  --adp-color: theme(colors.foreground / 0.9);
+  --adp-color-secondary: theme(colors.stone.600);
+  --adp-accent-color: theme(colors.brand);
+  --adp-color-current-date: var(--adp-accent-color);
+  --adp-color-other-month: theme(colors.stone.600);
+  --adp-color-disabled: #aeaeae;
+  --adp-color-disabled-in-range: #939393;
+  --adp-color-other-month-hover: #c5c5c5;
+
+  --adp-border-color: theme(colors.border);
+  --adp-border-color-inner: theme(colors.border);
+  --adp-border-color-inline: theme(colors.border);
+
+  --adp-nav-arrow-color: var(--adp-color-secondary);
+  --adp-nav-color-secondary: var(--adp-color-secondary);
+
+  --adp-day-name-color: theme(colors.brand);
+  --adp-day-name-color-hover: theme(colors.brand / 0.8);
+
+  --adp-cell-background-color-hover: var(--adp-background-color-hover);
+  --adp-cell-background-color-selected: theme(colors.brand);
+  --adp-cell-background-color-selected-hover: theme(colors.brand / 0.8);
+
+  --adp-btn-color: var(--adp-accent-color);
+  --adp-btn-color-hover: var(--adp-color);
+  --adp-btn-border-radius: var(--adp-border-radius);
+  --adp-btn-background-color-hover: var(--adp-background-color-hover);
+  --adp-btn-background-color-active: var(--adp-background-color-active);
+
+  --adp-time-day-period-color: var(--adp-color-secondary);
+}
+
+.air-datepicker-overlay {
+  --adp-overlay-background-color: rgba(0, 0, 0, 0.3);
+}

@@ -10,6 +10,7 @@
     "enabled": true
   },
   "linter": {
+    "ignore": ["./src/date-picker.css"],
     "enabled": true,
     "rules": {
       "recommended": true
@@ -20,6 +21,7 @@
     }
   },
   "formatter": {
+    "ignore": ["./src/date-picker.css"],
     "enabled": true,
     "formatWithErrors": true,
     "indentWidth": 2,
