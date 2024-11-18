@@ -74,6 +74,6 @@
     "typescript": "latest"
   },
   "engines": {
-    "node": ">=22"
+    "node": "20.x"
   }
 }

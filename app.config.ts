@@ -7,6 +7,11 @@ export default defineConfig({
   server: {
     compatibilityDate: "2024-11-12",
     preset: "vercel",
+    vercel: {
+      config: {
+        routes: [{ src: "/[^.]+", dest: "/" }],
+      },
+    },
   },
   vite: {
     optimizeDeps: { exclude: ["sqlocal"] },
