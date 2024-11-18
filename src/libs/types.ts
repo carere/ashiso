@@ -6,14 +6,16 @@ import {
   boolean,
   brand,
   custom,
-  isoTimestamp,
   literal,
+  maxLength,
+  minLength,
   number,
   object,
   optional,
   pick,
   pipe,
   record,
+  regex,
   string,
   union,
 } from "valibot";
@@ -117,7 +119,7 @@ export const ContractSchema = object({
 export type Contract = InferOutput<typeof ContractSchema>;
 
 export const MarketMetadataSchema = object({
-  lastUpdate: pipe(string(), isoTimestamp()),
+  lastUpdate: pipe(string(), maxLength(13), minLength(10), regex(/[0-9]*/)),
   cryptos: record(CryptoTickerSchema, CryptoCurrencySchema),
   contracts: record(ContractTickerSchema, ContractSchema),
   exchanges: record(ExchangeSlugSchema, ExchangeSchema),

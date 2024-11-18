@@ -53,6 +53,7 @@ export const getMarketMetadata = query(async () => {
 
   await Future.value(
     Result.fromExecution(() => {
+      dispatch(loading("Checking for market metadata in local storage..."));
       return parse(
         MarketMetadataSchema,
         JSON.parse(localStorage.getItem(MARKET_METADATA_KEY) ?? "{}"),
@@ -61,18 +62,20 @@ export const getMarketMetadata = query(async () => {
   ).flatMap((result) =>
     result.match({
       Error: () => {
-        dispatch(loading("Fetching market metadata"));
+        dispatch(loading("Metadata not found, fetching..."));
         return fetchMetadata(cryptoService, exchangeFacade).mapOk((metadata) => {
           localStorage.setItem(MARKET_METADATA_KEY, JSON.stringify(metadata));
           dispatch(updateMarketMetadata(metadata));
         });
       },
       Ok: (oldMetadata) => {
+        dispatch(loading("Checking if metadata are up to date..."));
         if (Math.abs(differenceInDays(new Date(), new Date(+oldMetadata.lastUpdate))) < 1) {
           dispatch(updateMarketMetadata(oldMetadata));
           return Future.value(Result.Ok((() => {})()));
         }
 
+        dispatch(loading("Updating Metadata..."));
         return fetchMetadata(cryptoService, exchangeFacade).mapOk((newMetadata) => {
           const deprecatedTickers = diff(
             Dict.keys(oldMetadata.contracts),
