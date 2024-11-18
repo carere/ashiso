@@ -1,5 +1,4 @@
 import { Button } from "@/components/atoms/button";
-import { Skeleton } from "@/components/atoms/skeleton";
 import { ToggleLang } from "@/components/atoms/toggle-lang";
 import { ToggleTheme } from "@/components/atoms/toggle-theme";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/atoms/tooltip";
@@ -26,7 +25,7 @@ const Link = (p: { to: string; text: string; icon: string }) => {
         size="icon"
         variant="ghost"
       >
-        <FaIcon name={p.icon} size="lg" />
+        <FaIcon name={p.icon} size="lg" style="Regular" />
       </TooltipTrigger>
       <TooltipContent>{p.text}</TooltipContent>
     </Tooltip>
@@ -47,7 +46,9 @@ export const DesktopMenu = (props: ComponentProps<"div">) => {
       <div class="flex flex-col gap-2 items-center mt-auto">
         <ToggleLang />
         <ToggleTheme />
-        <Skeleton class="size-9 rounded-full" />
+        <div class="flex size-9 border border-border justify-center items-center rounded-full">
+          <FaIcon name="right-to-bracket" size="sm" style="DuoTone" />
+        </div>
       </div>
     </aside>
   );

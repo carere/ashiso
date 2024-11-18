@@ -13,11 +13,11 @@ import { match } from "ts-pattern";
 
 const NoContract = (props: { timeFrame?: TradingFrequency }) => (
   <span class="inline-flex items-center gap-2">
-    <FaIcon name="arrow-right-arrow-left" />
+    <FaIcon name="arrow-right-arrow-left" style="Regular" />
     <span>/</span>
-    <FaIcon name="coins" />
+    <FaIcon name="coins" style="Regular" />
     <span>/</span>
-    <Show when={props.timeFrame} fallback={<FaIcon name="clock" />}>
+    <Show when={props.timeFrame} fallback={<FaIcon name="clock" style="Regular" />}>
       {props.timeFrame}
     </Show>
   </span>
@@ -55,12 +55,12 @@ const SessionTabPreview = (props: { session: Session }) => {
             />
             <span class="text-sm">{props.session.ticker?.split(":")[1]}</span>
             <span>/</span>
-            <Show when={props.session.frequency} fallback={<FaIcon name="clock" />}>
+            <Show when={props.session.frequency} fallback={<FaIcon name="clock" style="Regular" />}>
               {(freq) =>
                 match(freq())
-                  .with("scalping", () => <FaIcon name="gauge-min" />)
-                  .with("intra-day", () => <FaIcon name="gauge" />)
-                  .with("swing", () => <FaIcon name="gauge-max" />)
+                  .with("scalping", () => <FaIcon name="gauge-min" style="Regular" />)
+                  .with("intra-day", () => <FaIcon name="gauge" style="Regular" />)
+                  .with("swing", () => <FaIcon name="gauge-max" style="Regular" />)
                   .exhaustive()
               }
             </Show>

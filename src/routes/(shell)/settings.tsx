@@ -3,7 +3,7 @@ import { FaIcon } from "@/components/icons/fa-icon";
 import type { UserConfig } from "@/libs/types";
 import { createForm } from "@modular-forms/solid";
 import { Title } from "@solidjs/meta";
-import { Match, Show, Switch as SolidSwitch } from "solid-js";
+import { Match, Switch as SolidSwitch } from "solid-js";
 
 // const PriceDiagramSettings = (props: {
 //   value: PriceDiagramPreference;
@@ -51,18 +51,21 @@ import { Match, Show, Switch as SolidSwitch } from "solid-js";
 //   </Card>
 // );
 
-const SettingsForm = (props: { config: UserConfig }) => {
+export default function Settings() {
+  const userConfig: UserConfig = { exchanges: "binance" };
   const save = (config: UserConfig) => console.log("Saving config", config);
 
   const [configForm, { Form, Field }] = createForm<UserConfig>({
     get initialValues() {
-      return props.config;
+      return userConfig;
     },
   });
 
   return (
-    <Form onSubmit={save} class="flex flex-wrap gap-8 p-8">
+    <Form onSubmit={save} class="size-full flex flex-col items-center justify-center gap-8">
       <Title>Settings</Title>
+      <FaIcon name="rocket" size="2xl" style="DuoTone" />
+      <span>Settings Page under construction...</span>
       {/* <Field name="price_diagram">
         {(field) => (
           <PriceDiagramSettings
@@ -73,9 +76,10 @@ const SettingsForm = (props: { config: UserConfig }) => {
       </Field> */}
       <Button
         variant={"outline"}
-        class="w-full gap-4"
+        class="gap-4"
         type="submit"
-        disabled={configForm.submitting}
+        // disabled={configForm.submitting}
+        disabled
       >
         <SolidSwitch>
           <Match when={configForm.submitting}>
@@ -85,16 +89,5 @@ const SettingsForm = (props: { config: UserConfig }) => {
         <span>Save settings preferences</span>
       </Button>
     </Form>
-  );
-};
-
-export default function Settings() {
-  const userConfig = () => ({ exchanges: "binance" }) as UserConfig;
-
-  //BONUS: Add skeleton when data not available
-  return (
-    <Show when={userConfig()} fallback={<div>Loading user config...</div>}>
-      {(v) => <SettingsForm config={v()} />}
-    </Show>
   );
 }
