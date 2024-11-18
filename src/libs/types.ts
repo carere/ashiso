@@ -1,13 +1,17 @@
+import type { Epic } from "@carere/solux";
 import type { Accessor } from "solid-js";
 import {
   type InferOutput,
+  array,
   boolean,
   brand,
+  custom,
   isoTimestamp,
   literal,
   number,
   object,
   optional,
+  pick,
   pipe,
   record,
   string,
@@ -34,6 +38,7 @@ export type Container = {
 //
 
 export type RootState = ReturnType<typeof rootSlice.getInitialState>;
+export type AppEpic = Epic<RootState, Container>;
 
 //
 // User
@@ -124,36 +129,61 @@ export type MarketMetadata = InferOutput<typeof MarketMetadataSchema>;
 // BackTest
 //
 
-export type BackTestSpeed = "0.1" | "0.3" | "0.5" | "1" | "3" | "10";
+const BackTestSpeedSchema = union([
+  literal("0.1"),
+  literal("0.3"),
+  literal("0.5"),
+  literal("1"),
+  literal("3"),
+  literal("10"),
+]);
 
-export type BackTest = {
-  currentTime?: UTCTimestamp;
-  running: boolean;
-  selecting: boolean;
-  speed: BackTestSpeed;
-};
+export type BackTestSpeed = InferOutput<typeof BackTestSpeedSchema>;
+
+const BackTestSchema = object({
+  currentTime: optional(UTCTimestampSchema),
+  running: boolean(),
+  selecting: boolean(),
+  speed: BackTestSpeedSchema,
+});
+
+export type BackTest = InferOutput<typeof BackTestSchema>;
 
 //
 // Candles
 //
 
-export type FetchResolution = "m" | "H" | "D" | "W" | "M" | "Q" | "Y";
+const FetchResolutionSchema = union([
+  literal("m"),
+  literal("H"),
+  literal("D"),
+  literal("W"),
+  literal("M"),
+]);
 
-export type Candle = {
-  open: number;
-  close: number;
-  high: number;
-  low: number;
-  volume: number;
-  time: UTCTimestamp;
-  closed: boolean;
-  trades: number;
-  ticker: ContractTicker;
-};
+export type FetchResolution = InferOutput<typeof FetchResolutionSchema>;
+
+const CandleSchema = object({
+  open: number(),
+  close: number(),
+  high: number(),
+  low: number(),
+  volume: number(),
+  closed: boolean(),
+  trades: number(),
+  time: UTCTimestampSchema,
+  ticker: ContractTickerSchema,
+});
+
+export type Candle = InferOutput<typeof CandleSchema>;
 
 export type SimpleCandle = Omit<Candle, "trades" | "volume" | "ticker">;
 
-export type CandlesId = `${ContractTicker}-${number}-${FetchResolution}`;
+const CandlesIdSchema = custom<`${ContractTicker}-${number}-${FetchResolution}`>((input) =>
+  typeof input === "string" ? /^\w+-\d+-(m|H|D|W|M)$/.test(input) : false,
+);
+
+export type CandlesId = InferOutput<typeof CandlesIdSchema>;
 
 export type StockPriceOption = {
   ticker: ContractTicker;
@@ -167,17 +197,26 @@ export type StockPriceOption = {
 // Chart
 //
 
-export type IndicatorType = "volume" | "bollinger" | "volatility" | "phases";
+const IndicatorTypeSchema = union([
+  literal("volume"),
+  literal("bollinger"),
+  literal("volatility"),
+  literal("phases"),
+]);
 
-export type Chart = {
-  ticker: ContractTicker;
-  multiplier: number;
-  visible: boolean;
-  fetching: boolean;
-  resolution: FetchResolution;
-  selectedTime?: UTCTimestamp;
-  indicators: Record<IndicatorType, boolean>;
-};
+export type IndicatorType = InferOutput<typeof IndicatorTypeSchema>;
+
+const ChartSchema = object({
+  ticker: ContractTickerSchema,
+  multiplier: number(),
+  visible: boolean(),
+  fetching: boolean(),
+  resolution: FetchResolutionSchema,
+  selectedTime: optional(UTCTimestampSchema),
+  indicators: record(IndicatorTypeSchema, boolean()),
+});
+
+export type Chart = InferOutput<typeof ChartSchema>;
 
 export type GraphLayoutProps = {
   sessionId: string;
@@ -192,37 +231,52 @@ export type Range = Pick<StockPriceOption, "from" | "to">;
 // Indicators
 //
 
-export type TradingFrequency = "scalping" | "intra-day" | "swing";
+const TradingFrequencySchema = union([literal("scalping"), literal("intra-day"), literal("swing")]);
 
-export type BollingerBandData = {
-  time: number;
-  middle: number;
-  upper: number;
-  lower: number;
-  volatility?: number;
-  phase?: 1 | 2 | 3 | 4;
-};
+export type TradingFrequency = InferOutput<typeof TradingFrequencySchema>;
 
-export type BBPhase = Pick<BollingerBandData, "phase" | "time">;
-export type Volatility = Pick<BollingerBandData, "volatility" | "time">;
-export type BBands = Pick<BollingerBandData, "middle" | "upper" | "lower" | "time">;
+const BollingerBandDataSchema = object({
+  time: number(),
+  middle: number(),
+  upper: number(),
+  lower: number(),
+  volatility: optional(number()),
+  phase: optional(union([literal(1), literal(2), literal(3), literal(4)])),
+});
 
-export type VolumeMA = {
-  time: number;
-  value: number;
-};
+export type BollingerBandData = InferOutput<typeof BollingerBandDataSchema>;
 
-export type UnitOfTime = {
-  multiplier: number;
-  resolution: FetchResolution;
-};
+const BBPhaseSchema = pick(BollingerBandDataSchema, ["phase", "time"]);
+export type BBPhase = InferOutput<typeof BBPhaseSchema>;
 
-export type UnitOfTimeToTradeOn = {
-  bias: UnitOfTime;
-  strategy: UnitOfTime;
-  trading: UnitOfTime;
-  precision: UnitOfTime;
-};
+const VolatilitySchema = pick(BollingerBandDataSchema, ["volatility", "time"]);
+export type Volatility = InferOutput<typeof VolatilitySchema>;
+
+const BBandsSchema = pick(BollingerBandDataSchema, ["middle", "upper", "lower", "time"]);
+export type BBands = InferOutput<typeof BBandsSchema>;
+
+const VolumeMASchema = object({
+  time: number(),
+  value: number(),
+});
+
+export type VolumeMA = InferOutput<typeof VolumeMASchema>;
+
+const UnitOfTimeSchema = object({
+  multiplier: number(),
+  resolution: FetchResolutionSchema,
+});
+
+export type UnitOfTime = InferOutput<typeof UnitOfTimeSchema>;
+
+const UnitOfTimeToTradeOnSchema = object({
+  bias: UnitOfTimeSchema,
+  strategy: UnitOfTimeSchema,
+  trading: UnitOfTimeSchema,
+  precision: UnitOfTimeSchema,
+});
+
+export type UnitOfTimeToTradeOn = InferOutput<typeof UnitOfTimeToTradeOnSchema>;
 
 //
 // Session
@@ -230,18 +284,55 @@ export type UnitOfTimeToTradeOn = {
 
 export type CrossHair = { sender: TimeFrame; time: number };
 
-export type TimeFrame = `${number}-${FetchResolution}`;
+const TimeFrameSchema = custom<`${number}-${FetchResolution}`>((input) =>
+  typeof input === "string" ? /^\d+-(m|H|D|W|M)$/.test(input) : false,
+);
 
-export type Session = {
-  id: string;
-  ticker?: ContractTicker;
-  frequency?: TradingFrequency;
-  selectedTime?: UTCTimestamp;
-  layout: "grid" | "horizontal" | "vertical";
-  draft: boolean;
-  backTest?: BackTest;
+export type TimeFrame = InferOutput<typeof TimeFrameSchema>;
+
+export const SessionSchema = object({
+  id: string(),
+  ticker: optional(ContractTickerSchema),
+  frequency: optional(TradingFrequencySchema),
+  selectedTime: optional(UTCTimestampSchema),
+  layout: union([literal("grid"), literal("horizontal"), literal("vertical")]),
+  draft: boolean(),
+  backTest: optional(BackTestSchema),
+  charts: record(TimeFrameSchema, ChartSchema),
+  createdAt: UTCTimestampSchema,
+  candles: record(
+    CandlesIdSchema,
+    object({
+      currentCandle: optional(CandleSchema),
+      entities: record(string(), CandleSchema),
+      values: array(CandleSchema),
+    }),
+  ),
+  indicators: record(
+    TimeFrameSchema,
+    object({
+      volume: object({
+        entities: record(string(), VolumeMASchema),
+        values: array(VolumeMASchema),
+      }),
+      bollinger: object({
+        entities: record(string(), BBandsSchema),
+        values: array(BBandsSchema),
+      }),
+      volatility: object({
+        entities: record(string(), VolatilitySchema),
+        values: array(VolatilitySchema),
+      }),
+      phases: object({
+        entities: record(string(), BBPhaseSchema),
+        values: array(BBPhaseSchema),
+      }),
+    }),
+  ),
+});
+
+export type Session = InferOutput<typeof SessionSchema> & {
   charts: Record<TimeFrame, Chart>;
-  createdAt: UTCTimestamp;
   candles: Record<
     CandlesId,
     {
@@ -272,6 +363,8 @@ export type Session = {
     }
   >;
 };
+
+type A = Session["charts"];
 
 //
 // Worker Events
@@ -316,4 +409,20 @@ export type AnalyzerWorkerResponse = {
     volatility: Volatility[];
     phases: BBPhase[];
   };
+};
+
+//
+// State Saved
+//
+
+export const SaveStateSchema = object({
+  sessions: object({
+    ids: array(string()),
+    current: string(),
+    entities: record(string(), SessionSchema),
+  }),
+});
+
+export type SaveState = {
+  sessions: InferOutput<typeof SaveStateSchema>["sessions"] & { entities: Record<string, Session> };
 };

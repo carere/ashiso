@@ -9,6 +9,8 @@ import i18next from "i18next";
 import { type ComponentProps, Show } from "solid-js";
 import { match } from "ts-pattern";
 
+//TODO: Disable deprecated contracts
+
 const NoContract = (props: { timeFrame?: TradingFrequency }) => (
   <span class="inline-flex items-center gap-2">
     <FaIcon name="arrow-right-arrow-left" />

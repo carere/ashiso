@@ -10,10 +10,12 @@ import Backend from "i18next-http-backend";
 import { Suspense } from "solid-js";
 import "./app.css";
 import { Loading } from "@/components/templates/loading";
+import { Result } from "@swan-io/boxed";
+import { parse } from "valibot";
 import { binanceCryptoService } from "./libs/adapters/crypto.service";
 import { ashisoExchangeFacade } from "./libs/adapters/exchange.facade";
 import { binanceExchangeGateway } from "./libs/adapters/exchanges/binance/binance";
-import type { Container, ExchangeSlug } from "./libs/types";
+import { type Container, type ExchangeSlug, type SaveState, SaveStateSchema } from "./libs/types";
 
 const storageManager = cookieStorageManagerSSR(document.cookie);
 
@@ -49,8 +51,15 @@ export default function App() {
     }),
   };
 
+  const preloadedState = Result.fromExecution(() =>
+    parse(SaveStateSchema, JSON.parse(localStorage.getItem("ashiso-state") ?? "{}")),
+  ).match({
+    Error: () => undefined,
+    Ok: (state) => state as SaveState,
+  });
+
   return (
-    <SoluxProvider store={createStore(container)}>
+    <SoluxProvider store={createStore(container, preloadedState)}>
       <MetaProvider>
         <ColorModeScript storageType={storageManager.type} />
         <ColorModeProvider storageManager={storageManager}>

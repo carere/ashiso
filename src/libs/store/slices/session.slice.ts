@@ -4,6 +4,7 @@ import type {
   ContractTicker,
   FetchResolution,
   Session,
+  TimeFrame,
   TradingFrequency,
   UTCTimestamp,
 } from "@/libs/types";
@@ -186,21 +187,21 @@ export const sessionSlice = createSlice({
       // Chart Management
       //
       .addHandler(toggleChart, (state, { payload: { sessionId, timeFrame } }) => {
-        state.entities[sessionId].charts[timeFrame].visible =
-          !state.entities[sessionId].charts[timeFrame].visible;
+        (state.entities[sessionId].charts[timeFrame] as Chart).visible =
+          !state.entities[sessionId].charts[timeFrame]?.visible;
       })
       .addHandler(toggleIndicator, (state, { payload: { sessionId, timeFrame, indicator } }) => {
-        state.entities[sessionId].charts[timeFrame].indicators[indicator] =
-          !state.entities[sessionId].charts[timeFrame].indicators[indicator];
+        (state.entities[sessionId].charts[timeFrame] as Chart).indicators[indicator] =
+          !state.entities[sessionId].charts[timeFrame]?.indicators[indicator];
       })
       .addHandler(selectChartTime, (state, { payload: { sessionId, time, timeFrame } }) => {
-        state.entities[sessionId].charts[timeFrame].selectedTime = time as UTCTimestamp;
+        (state.entities[sessionId].charts[timeFrame] as Chart).selectedTime = time as UTCTimestamp;
       })
       .addHandler(clearChartTime, (state, { payload: { sessionId, timeFrame } }) => {
-        state.entities[sessionId].charts[timeFrame].selectedTime = undefined;
+        (state.entities[sessionId].charts[timeFrame] as Chart).selectedTime = undefined;
       })
       .addHandler(fetching, (state, { payload: { sessionId, timeFrame, fetching } }) => {
-        state.entities[sessionId].charts[timeFrame].fetching = fetching;
+        (state.entities[sessionId].charts[timeFrame] as Chart).fetching = fetching;
       })
       //
       // Candles Management
@@ -248,18 +249,19 @@ export const sessionSlice = createSlice({
         const bands = Dict.fromEntries(data.bollinger.map((b) => [b.time, b]));
         const cycles = Dict.fromEntries(data.volatility.map((v) => [v.time, v]));
         const phases = Dict.fromEntries(data.phases.map((p) => [p.time, p]));
+        const indicatorsByTf = state.entities[sessionId].indicators[timeFrame] as NonNullable<
+          Session["indicators"][TimeFrame]
+        >;
 
         const indicators: Session["indicators"][typeof timeFrame] = {
           volume: {
             values:
-              kind === "start"
-                ? data.volume
-                : state.entities[sessionId].indicators[timeFrame].volume.values.concat(data.volume),
+              kind === "start" ? data.volume : indicatorsByTf.volume.values.concat(data.volume),
             entities:
               kind === "start"
                 ? volumes
                 : {
-                    ...state.entities[sessionId].indicators[timeFrame].volume.entities,
+                    ...indicatorsByTf?.volume.entities,
                     ...volumes,
                   },
           },
@@ -267,14 +269,12 @@ export const sessionSlice = createSlice({
             values:
               kind === "start"
                 ? data.bollinger
-                : state.entities[sessionId].indicators[timeFrame].bollinger.values.concat(
-                    data.bollinger,
-                  ),
+                : indicatorsByTf.bollinger.values.concat(data.bollinger),
             entities:
               kind === "start"
                 ? bands
                 : {
-                    ...state.entities[sessionId].indicators[timeFrame].bollinger.entities,
+                    ...indicatorsByTf?.bollinger.entities,
                     ...bands,
                   },
           },
@@ -282,27 +282,23 @@ export const sessionSlice = createSlice({
             values:
               kind === "start"
                 ? data.volatility
-                : state.entities[sessionId].indicators[timeFrame].volatility.values.concat(
-                    data.volatility,
-                  ),
+                : indicatorsByTf.volatility.values.concat(data.volatility),
             entities:
               kind === "start"
                 ? cycles
                 : {
-                    ...state.entities[sessionId].indicators[timeFrame].volatility.entities,
+                    ...indicatorsByTf?.volatility.entities,
                     ...cycles,
                   },
           },
           phases: {
             values:
-              kind === "start"
-                ? data.phases
-                : state.entities[sessionId].indicators[timeFrame].phases.values.concat(data.phases),
+              kind === "start" ? data.phases : indicatorsByTf.phases.values.concat(data.phases),
             entities:
               kind === "start"
                 ? phases
                 : {
-                    ...state.entities[sessionId].indicators[timeFrame].phases.entities,
+                    ...indicatorsByTf?.phases.entities,
                     ...phases,
                   },
           },
