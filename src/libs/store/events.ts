@@ -16,6 +16,7 @@ import type {
 } from "@/libs/types";
 import { createEvent } from "@carere/solux";
 
+export const stateSaved = createEvent("stateSaved");
 export const updateMarketMetadata = createEvent<MarketMetadata>("updateMarketMetadata");
 export const loading = createEvent<string>("loading");
 

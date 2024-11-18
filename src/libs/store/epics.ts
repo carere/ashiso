@@ -1,11 +1,14 @@
 import type { AppEpic, SaveState } from "@/libs/types";
 import type { Event } from "@carere/solux";
 import { mapValues } from "radash";
-import { EMPTY, debounceTime, filter, switchMap } from "rxjs";
+import { debounceTime, filter, of, switchMap, tap } from "rxjs";
+import { toast } from "solid-sonner";
 import {
   addNewCandle,
   fetching,
+  loading,
   setCandles,
+  stateSaved,
   updateBackTestCurrentTime,
   updateCurrentCandle,
   updateIndicators,
@@ -16,6 +19,8 @@ export const saveStateEpic: AppEpic = (event$, state) =>
     filter<Event>(
       ({ type }) =>
         ![
+          loading.type,
+          stateSaved.type,
           setCandles.type,
           updateCurrentCandle.type,
           addNewCandle.type,
@@ -43,6 +48,7 @@ export const saveStateEpic: AppEpic = (event$, state) =>
 
       localStorage.setItem("ashiso-state", JSON.stringify(stateToSave));
 
-      return EMPTY;
+      return of(stateSaved());
     }),
+    tap(() => toast("State saved")),
   );

@@ -46,6 +46,7 @@
     "radash": "^12.1.0",
     "rxjs": "^7.8.1",
     "solid-js": "^1.9.3",
+    "solid-sonner": "^0.2.8",
     "sqlocal": "^0.12.0",
     "tailwind-merge": "^2.5.4",
     "ts-pattern": "^5.5.0",
